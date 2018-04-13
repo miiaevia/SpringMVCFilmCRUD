@@ -4,5 +4,4 @@ build
 target
 gradle
 gradlew
-.settings
 .gradle
