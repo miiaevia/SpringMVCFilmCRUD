@@ -62,5 +62,7 @@
       <p>No film found</p>
     </c:otherwise>
   </c:choose>
+  <br>
+  <a href="index.html">Return home</a>
 </body>
 </html>
