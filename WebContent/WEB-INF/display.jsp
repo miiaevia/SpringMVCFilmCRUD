@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -41,7 +42,7 @@
         </tr>
         <tr>
         	<td>Rental rate:</td>
-        	<td>${film.rentalRate}</td>
+        	<td><fmt:formatNumber value="${film.rentalRate}" type="currency"/></td>
         </tr>
         <tr>
         	<td>Length of film:</td>
@@ -49,7 +50,7 @@
         </tr>
         <tr>
         	<td>Replacement Cost:</td>
-        	<td>${film.replacementCost}</td>
+        	<td><fmt:formatNumber value="${film.replacementCost}" type="currency"/></td>
         </tr>
         <tr>
         	<td>Rating:</td>
