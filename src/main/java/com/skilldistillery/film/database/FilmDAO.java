@@ -221,11 +221,11 @@ public class FilmDAO implements DatabaseAccessor {
 				try {
 					conn.rollback();
 				} catch (SQLException e2) {
-					System.out.println("Unable to add film");
+					System.err.println("Error in rollback");
 				}
 			}
 
-			throw new RuntimeException("This film was added successfully");
+			throw new RuntimeException("Unable to add film");
 		}
 		return film;
 	}
@@ -259,10 +259,8 @@ public class FilmDAO implements DatabaseAccessor {
 			conn = DriverManager.getConnection(URL, user, pass);
 			conn.setAutoCommit(false);
 			String sql = "update film " + "set title = ?," + " description = ?, " + "release_year = ?, "
-					+ "language_id = 1, "// how do u want to handle this??
-					// can we do a dropdown menu in the jsp?? ex: 1 english 2 french etc.
-					+ "rental_duration = ?, " + "rental_rate = ?," + " length = ?, " + "replacement_cost = ?, "
-					+ "rating = ?, " + "special_features = ? " + "where id = ?";
+					+ "language_id = 1, " + "rental_duration = ?, " + "rental_rate = ?," + " length = ?, "
+					+ "replacement_cost = ?, " + "rating = ?, " + "special_features = ? " + "where id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());
 			stmt.setString(2, film.getDescription());
@@ -282,11 +280,11 @@ public class FilmDAO implements DatabaseAccessor {
 				try {
 					conn.rollback();
 				} catch (SQLException e2) {
-					System.out.println("Unable to edit film");
+					System.err.println("Error in rollback");
 				}
 			}
 
-			throw new RuntimeException("This film was edited successfully");
+			throw new RuntimeException("Unable to edit film");
 		}
 		return film;
 	}
