@@ -19,7 +19,9 @@ public class Film {
 	private String specialFeatures;
 	private List <Actor> cast;
 	
-	
+	public Film() {
+		
+	}
 	
 
 

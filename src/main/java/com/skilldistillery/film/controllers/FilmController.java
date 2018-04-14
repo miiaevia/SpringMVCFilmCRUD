@@ -45,4 +45,21 @@ public class FilmController {
 		mv.setViewName("display");
 		return mv;
 	}
+	
+	@RequestMapping(path="GetFilmInfo.do", method = RequestMethod.POST)
+	public ModelAndView addFilm(Film createdFilm, RedirectAttributes redir) {
+		ModelAndView mv = new ModelAndView();
+		List<Film> filmList = new ArrayList<Film>();
+		filmList.add(accessor.addFilm(createdFilm));
+		redir.addFlashAttribute("filmList", filmList);
+		mv.setViewName("redirect:filmAdded.do");
+		return mv;
+	}
+
+	  @RequestMapping(path = "filmAdded.do", method = RequestMethod.GET)
+	  public ModelAndView added() {
+	    ModelAndView mv = new ModelAndView();
+	    mv.setViewName("display");
+	    return mv;
+	  }
 }
