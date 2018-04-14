@@ -204,7 +204,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			stmt.setDouble(8, film.getReplacementCost());
 			stmt.setString(9, film.getRating());
 			stmt.setString(10, film.getSpecialFeatures());
-			System.out.println(film);
+			
 			int updateCount = stmt.executeUpdate();
 			if (updateCount == 1) {
 				ResultSet generatedKeys = stmt.getGeneratedKeys();
@@ -215,6 +215,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			} else {
 				film = null;
 			}
+			System.out.println(film);
 			conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -233,24 +234,29 @@ public class FilmDAOImpl implements DatabaseAccessor {
 	}
 
 	public boolean deleteFilm(Film film) {
-		int newActorId = 0;
-
+		boolean deletion = false;
+		
 		try {
 			String sql = "delete from film where id = ?";
 			Connection conn = DriverManager.getConnection(URL, user, pass);
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, film.getId());
 			int updateCount = stmt.executeUpdate();
-			if (updateCount == 1) {
+			if (updateCount != 0) {
 				System.out.println("Film deleted successfully");
-				return true;
+				deletion = true;
+			}
+			else {
+				System.out.println("Unable to delete film");
+				deletion = false;
 			}
 
+			return deletion;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			deletion = false;
+			return deletion;
 		}
-		System.out.println("Unable to delete film");
-		return false;
 	}
 
 	@Override
@@ -290,30 +296,6 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			throw new RuntimeException("Unable to edit film");
 		}
 		return film;
-	}
-
-	@Override
-	public boolean isValidFilmID(Film createdFilm) {
-		Connection conn = null;
-		
-		try {
-			conn = DriverManager.getConnection(URL, user, pass);
-			conn.setAutoCommit(false);
-			String sql = "SELECT id FROM film WHERE id = ?";
-			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			stmt.setInt(1, createdFilm.getId());
-			ResultSet rs = stmt.executeQuery();
-			conn.commit();
-			if (rs != null) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
 	}
 	
 }

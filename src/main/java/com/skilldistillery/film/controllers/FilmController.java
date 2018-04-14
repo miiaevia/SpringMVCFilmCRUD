@@ -52,6 +52,20 @@ public class FilmController {
 		mv.setViewName("display");
 		return mv;
 	}
+	
+	@RequestMapping(path = "delete.do", method = RequestMethod.POST)
+	public ModelAndView deleteFilm(Film filmToDelete) {
+		ModelAndView mv = new ModelAndView();
+		System.out.println(filmToDelete.getId());
+		if(accessor.deleteFilm(filmToDelete)) {
+			mv.setViewName("deleteSuccess");
+		}
+		else {
+			mv.setViewName("deleteFail");
+		}
+		
+		return mv;
+	}
 
 	@RequestMapping(path = "addInfo.do", method = RequestMethod.POST)
 	public ModelAndView addFilm(@Valid Film createdFilm, Errors errors, RedirectAttributes redir) {

@@ -22,7 +22,5 @@ public interface DatabaseAccessor {
 	public boolean deleteFilm (Film film);
 	
 	public Film editFilm (Film film);
-
-	public boolean isValidFilmID(Film createdFilm);
 	
 }
