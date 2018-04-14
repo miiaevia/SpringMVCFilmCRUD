@@ -3,9 +3,11 @@ package com.skilldistillery.film.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,14 +54,20 @@ public class FilmController {
 	}
 
 	@RequestMapping(path = "addInfo.do", method = RequestMethod.POST)
-	public ModelAndView addFilm(Film createdFilm, RedirectAttributes redir) {
+	public ModelAndView addFilm(@Valid Film createdFilm, Errors errors, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
-		List<Film> filmList = new ArrayList<Film>();
-		createdFilm.setLanguage(accessor.getFilmsLanguage(createdFilm.getLanguageId()));
-		filmList.add(accessor.addFilm(createdFilm));
-		redir.addFlashAttribute("filmList", filmList);
-		mv.setViewName("redirect:filmAdded.do");
-		return mv;
+			List<Film> filmList = new ArrayList<Film>();
+			createdFilm.setLanguage(accessor.getFilmsLanguage(createdFilm.getLanguageId()));
+			Film f = accessor.addFilm(createdFilm);
+			if (f != null) {
+				filmList.add(f);
+				redir.addFlashAttribute("filmList", filmList);
+				mv.setViewName("redirect:filmAdded.do");
+			}
+			else {
+				mv.setViewName("couldNotAddFilm");
+			}
+			return mv;
 	}
 
 	@RequestMapping(path = "filmAdded.do", method = RequestMethod.GET)

@@ -224,6 +224,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 				} catch (SQLException e2) {
 					System.err.println("Error in rollback");
 				}
+				return null;
 			}
 
 			throw new RuntimeException("Unable to add film");
@@ -290,4 +291,29 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		}
 		return film;
 	}
+
+	@Override
+	public boolean isValidFilmID(Film createdFilm) {
+		Connection conn = null;
+		
+		try {
+			conn = DriverManager.getConnection(URL, user, pass);
+			conn.setAutoCommit(false);
+			String sql = "SELECT id FROM film WHERE id = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setInt(1, createdFilm.getId());
+			ResultSet rs = stmt.executeQuery();
+			conn.commit();
+			if (rs != null) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 }
