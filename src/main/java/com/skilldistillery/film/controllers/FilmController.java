@@ -26,27 +26,32 @@ public class FilmController {
 	public void setAccessor(DatabaseAccessor accessor) {
 		this.accessor = accessor;
 	}
-	
-	@RequestMapping(path="GetFilmInfo.do", params="id", method = RequestMethod.GET)
+
+	@RequestMapping(path = "GetFilmInfo.do", params = "id", method = RequestMethod.GET)
 	public ModelAndView getFilmByID(int id) {
 		ModelAndView mv = new ModelAndView();
 		List<Film> filmList = new ArrayList<Film>();
-		filmList.add(accessor.getFilmById(id));
-		mv.addObject(filmList);
+		Film idFilm = accessor.getFilmById(id);
+		if (idFilm != null) {
+			filmList.add(accessor.getFilmById(id));
+			mv.addObject(filmList);
+		}
 		mv.setViewName("display");
 		return mv;
 	}
-	
-	@RequestMapping(path="GetFilmInfo.do", params="keyword", method = RequestMethod.GET)
+
+	@RequestMapping(path = "GetFilmInfo.do", params = "keyword", method = RequestMethod.GET)
 	public ModelAndView getFilmByKeyword(String keyword) {
 		ModelAndView mv = new ModelAndView();
 		List<Film> filmList = accessor.getFilmByKeyword(keyword);
-		mv.addObject(filmList);
+		if (filmList != null) {
+			mv.addObject(filmList);
+		}
 		mv.setViewName("display");
 		return mv;
 	}
-	
-	@RequestMapping(path="addInfo.do", method = RequestMethod.POST)
+
+	@RequestMapping(path = "addInfo.do", method = RequestMethod.POST)
 	public ModelAndView addFilm(Film createdFilm, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
 		List<Film> filmList = new ArrayList<Film>();
@@ -57,10 +62,10 @@ public class FilmController {
 		return mv;
 	}
 
-	  @RequestMapping(path = "filmAdded.do", method = RequestMethod.GET)
-	  public ModelAndView added() {
-	    ModelAndView mv = new ModelAndView();
-	    mv.setViewName("display");
-	    return mv;
-	  }
+	@RequestMapping(path = "filmAdded.do", method = RequestMethod.GET)
+	public ModelAndView added() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("display");
+		return mv;
+	}
 }
