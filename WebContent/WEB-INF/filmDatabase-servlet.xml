@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	<context:component-scan
-		base-package="com.skilldistillery.film.database, com.skilldistillery.film.entities" />
+		base-package="com.skilldistillery.film.database, com.skilldistillery.film.entities, com.skilldistillery.film.controllers" />
 	<mvc:annotation-driven />
 
 	<bean id="viewResolver"
@@ -19,4 +19,6 @@
 		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	<bean id="dao" class="com.skilldistillery.film.database.FilmDAOImpl"/>
 </beans>
