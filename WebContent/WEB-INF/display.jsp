@@ -34,7 +34,7 @@
         </tr>
         <tr>
         	<td>Language:</td>
-        	<td>${film.language}</td>
+        	<td>${film.languageId}</td>
         </tr>
         <tr>
         	<td>Duration of rental:</td>
