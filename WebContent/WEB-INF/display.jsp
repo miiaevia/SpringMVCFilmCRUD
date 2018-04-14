@@ -11,8 +11,8 @@
 </head>
 <body>
   <c:choose>
-    <c:when test="${! empty films}">
-      <c:forEach var="film" items="${films}">
+    <c:when test="${! empty filmList}">
+      <c:forEach var="film" items="${filmList}">
       <h3>Film:</h3>
       <br>
       <table>
