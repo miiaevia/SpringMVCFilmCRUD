@@ -41,7 +41,6 @@ public class FilmDAO implements DatabaseAccessor {
 			conn.close();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return cast;
@@ -80,7 +79,6 @@ public class FilmDAO implements DatabaseAccessor {
 			conn.close();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 		}
@@ -107,7 +105,6 @@ public class FilmDAO implements DatabaseAccessor {
 			conn.close();
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return actor;
@@ -184,21 +181,19 @@ public class FilmDAO implements DatabaseAccessor {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.exit(1);
 		}
 	}
 
 	public Film addFilm(Film film) {
-		// todo change return to a boolean to indicate success or failure of insert(same
-		// as delete)
-		int newActorId = 0;
+		Connection conn = null;
 
 		try {
+			conn = DriverManager.getConnection(URL, user, pass);
+			conn.setAutoCommit(false);
 			String sql = "insert into film(title, description, release_year, language_id, rental_duration, "
 					+ "rental_rate, length, replacement_cost, rating, special_features ) values(?,?,?,1,?,?,?,?,?,?)";
-			Connection conn = DriverManager.getConnection(URL, user, pass);
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());
 			stmt.setString(2, film.getDescription());
@@ -213,19 +208,26 @@ public class FilmDAO implements DatabaseAccessor {
 			if (updateCount == 1) {
 				ResultSet generatedKeys = stmt.getGeneratedKeys();
 				if (generatedKeys.next()) {
-					newActorId = generatedKeys.getInt(1);
-					film.setId(newActorId);
-					return film;
-					// System.out.println("This film was added successfully");
-					// return true;
+					int newFilmId = generatedKeys.getInt(1);
+					film.setId(newFilmId);
 				}
+			} else {
+				film = null;
 			}
+			conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException e2) {
+					System.out.println("Unable to add film");
+				}
+			}
+
+			throw new RuntimeException("This film was added successfully");
 		}
-		return null;
-		// System.out.println("Unable to add film");
-		// return false;
+		return film;
 	}
 
 	public boolean deleteFilm(Film film) {
@@ -250,29 +252,17 @@ public class FilmDAO implements DatabaseAccessor {
 	}
 
 	@Override
-	public Film editFilm(Film film) {// boolean
-		// if all info coming through from jsp in the form of a new film object
-		// then this method can be as easy as
-		// deleteFilm(film);
-		// and addFilmWithId(film);
-		// return boolean for success and fail
-		//int newActorId = 0;
+	public Film editFilm(Film film) {
+		Connection conn = null;
 
 		try {
-			String sql = "update film "
-					+ "set title = ?," 
-					+ " description = ?, "
-					+ "release_year = ?, "
+			conn = DriverManager.getConnection(URL, user, pass);
+			conn.setAutoCommit(false);
+			String sql = "update film " + "set title = ?," + " description = ?, " + "release_year = ?, "
 					+ "language_id = 1, "// how do u want to handle this??
 					// can we do a dropdown menu in the jsp?? ex: 1 english 2 french etc.
-					+ "rental_duration = ?, "
-					+ "rental_rate = ?,"
-					+ " length = ?, "
-					+ "replacement_cost = ?, "
-					+ "rating = ?, "
-					+ "special_features = ? "
-					+ "where id = ?";
-			Connection conn = DriverManager.getConnection(URL, user, pass);
+					+ "rental_duration = ?, " + "rental_rate = ?," + " length = ?, " + "replacement_cost = ?, "
+					+ "rating = ?, " + "special_features = ? " + "where id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());
 			stmt.setString(2, film.getDescription());
@@ -285,22 +275,19 @@ public class FilmDAO implements DatabaseAccessor {
 			stmt.setString(9, film.getSpecialFeatures());
 			stmt.setInt(10, film.getId());
 			int updateCount = stmt.executeUpdate();
-			if (updateCount == 1) {
-				ResultSet generatedKeys = stmt.getGeneratedKeys();
-				if (generatedKeys.next()) {
-					// newActorId = generatedKeys.getInt(1);
-					// film.setId(newActorId);
-					return film;
-					// System.out.println("This film was edited successfully");
-					// return true;
-				}
-			}
+			conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		return null;
-		// System.out.println("Unable to edit this film");
-		// return false;
-	}
+			if (conn != null) {
+				try {
+					conn.rollback();
+				} catch (SQLException e2) {
+					System.out.println("Unable to edit film");
+				}
+			}
 
+			throw new RuntimeException("This film was edited successfully");
+		}
+		return film;
+	}
 }
