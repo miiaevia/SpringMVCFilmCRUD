@@ -70,9 +70,8 @@ public class FilmDAOImpl implements DatabaseAccessor {
 				String rating = rs.getString(10);
 				String specialFeatures = rs.getString(11);
 				List<Actor> cast = getActorsByFilmId(id);
-				Language languages = getFilmsLanguage(filmId);
-				film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate, length,
-						replacementCost, rating, specialFeatures, cast);
+				Language language = getFilmsLanguage(filmId);
+				film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, cast, language);
 			}
 			rs.close();
 			stmt.close();
@@ -138,7 +137,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 				Language language = getFilmsLanguage(languageId);
 
 				Film film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate,
-						length, replacementCost, rating, specialFeatures, cast);
+						length, replacementCost, rating, specialFeatures, cast, language);
 				films.add(film);
 			}
 			rs.close();
@@ -188,22 +187,24 @@ public class FilmDAOImpl implements DatabaseAccessor {
 
 	public Film addFilm(Film film) {
 		Connection conn = null;
-
+		
 		try {
 			conn = DriverManager.getConnection(URL, user, pass);
 			conn.setAutoCommit(false);
 			String sql = "insert into film(title, description, release_year, language_id, rental_duration, "
-					+ "rental_rate, length, replacement_cost, rating, special_features ) values(?,?,?,1,?,?,?,?,?,?)";
+					+ "rental_rate, length, replacement_cost, rating, special_features ) values(?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());
 			stmt.setString(2, film.getDescription());
 			stmt.setInt(3, film.getReleaseYear());
 			stmt.setInt(4, film.getRentalDuration());
-			stmt.setDouble(5, film.getRentalRate());
-			stmt.setInt(6, film.getLength());
-			stmt.setDouble(7, film.getReplacementCost());
-			stmt.setString(8, film.getRating());
-			stmt.setString(9, film.getSpecialFeatures());
+			stmt.setInt(5, film.getLanguageId());
+			stmt.setDouble(6, film.getRentalRate());
+			stmt.setInt(7, film.getLength());
+			stmt.setDouble(8, film.getReplacementCost());
+			stmt.setString(9, film.getRating());
+			stmt.setString(10, film.getSpecialFeatures());
+			System.out.println(film);
 			int updateCount = stmt.executeUpdate();
 			if (updateCount == 1) {
 				ResultSet generatedKeys = stmt.getGeneratedKeys();
@@ -223,6 +224,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 				} catch (SQLException e2) {
 					System.err.println("Error in rollback");
 				}
+				return null;
 			}
 
 			throw new RuntimeException("Unable to add film");
@@ -259,19 +261,20 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			conn = DriverManager.getConnection(URL, user, pass);
 			conn.setAutoCommit(false);
 			String sql = "update film " + "set title = ?," + " description = ?, " + "release_year = ?, "
-					+ "language_id = 1, " + "rental_duration = ?, " + "rental_rate = ?," + " length = ?, "
+					+ "language_id = ?, " + "rental_duration = ?, " + "rental_rate = ?," + " length = ?, "
 					+ "replacement_cost = ?, " + "rating = ?, " + "special_features = ? " + "where id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());
 			stmt.setString(2, film.getDescription());
 			stmt.setInt(3, film.getReleaseYear());
-			stmt.setInt(4, film.getRentalDuration());
-			stmt.setDouble(5, film.getRentalRate());
-			stmt.setInt(6, film.getLength());
-			stmt.setDouble(7, film.getReplacementCost());
-			stmt.setString(8, film.getRating());
-			stmt.setString(9, film.getSpecialFeatures());
-			stmt.setInt(10, film.getId());
+			stmt.setInt(4, film.getLanguageId());
+			stmt.setInt(5, film.getRentalDuration());
+			stmt.setDouble(6, film.getRentalRate());
+			stmt.setInt(7, film.getLength());
+			stmt.setDouble(8, film.getReplacementCost());
+			stmt.setString(9, film.getRating());
+			stmt.setString(10, film.getSpecialFeatures());
+			stmt.setInt(11, film.getId());
 			int updateCount = stmt.executeUpdate();
 			conn.commit();
 		} catch (SQLException e) {
@@ -288,4 +291,29 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		}
 		return film;
 	}
+
+	@Override
+	public boolean isValidFilmID(Film createdFilm) {
+		Connection conn = null;
+		
+		try {
+			conn = DriverManager.getConnection(URL, user, pass);
+			conn.setAutoCommit(false);
+			String sql = "SELECT id FROM film WHERE id = ?";
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setInt(1, createdFilm.getId());
+			ResultSet rs = stmt.executeQuery();
+			conn.commit();
+			if (rs != null) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
 }

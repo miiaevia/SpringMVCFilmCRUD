@@ -56,7 +56,7 @@ public class Language {
 	}
 	@Override
 	public String toString() {
-		return "Language name: " + name ;
+		return name ;
 	}
 
 }
