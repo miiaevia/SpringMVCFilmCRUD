@@ -243,4 +243,52 @@ public class FilmDAO implements DatabaseAccessor {
 		return false;
 	}
 
+	@Override
+	public Film editFilm(Film film) {
+		//if all info coming through from jsp in the form of a new film object
+		//then this method can be as easy as
+		//deleteFilm(film);
+		//and addFilmWithId(film);
+		int newActorId = 0;
+
+		try {
+			String sql = "update film "
+					+ "set title = ?,"
+					+ " description = ?, "
+					+ "release_year = ?, "
+					+ "language_id = 1, "//how do u want to handle this?? can we do a dropdown menu in the jsp?ex: 1 english 2 french etc.
+					+ "rental_duration = ?, "
+					+ "rental_rate = ?,"
+					+ " length = ?, "
+					+ "replacement_cost = ?, "
+					+ "rating = ?, "
+					+ "special_features = ? "
+					+ "where id = ?";
+			Connection conn = DriverManager.getConnection(URL, user, pass);
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, film.getTitle());
+			stmt.setString(2, film.getDescription());
+			stmt.setInt(3, film.getReleaseYear());
+			stmt.setInt(4, film.getRentalDuration());
+			stmt.setDouble(5, film.getRentalRate());
+			stmt.setInt(6, film.getLength());
+			stmt.setDouble(7, film.getReplacementCost());
+			stmt.setString(8, film.getRating());
+			stmt.setString(9, film.getSpecialFeatures());
+			stmt.setInt(10, film.getId());
+			int updateCount = stmt.executeUpdate();
+			if (updateCount == 1) {
+				ResultSet generatedKeys = stmt.getGeneratedKeys();
+				if (generatedKeys.next()) {
+//					newActorId = generatedKeys.getInt(1);
+//					film.setId(newActorId);
+					return film;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
