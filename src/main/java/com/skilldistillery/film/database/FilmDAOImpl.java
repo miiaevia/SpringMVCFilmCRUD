@@ -13,7 +13,7 @@ import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 import com.skilldistillery.film.entities.Language;
 
-public class FilmDAO implements DatabaseAccessor {
+public class FilmDAOImpl implements DatabaseAccessor {
 	private static String user = "student";
 	private static String pass = "student";
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid";
