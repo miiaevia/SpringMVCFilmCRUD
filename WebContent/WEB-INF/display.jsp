@@ -10,7 +10,10 @@
 </head>
 <body>
   <c:choose>
-    <c:when test="${! empty film}">
+    <c:when test="${! empty films}">
+      <c:forEach var="film" items="${films}">
+      <h3>Film:</h3>
+      <br>
       <table>
       	<tr>
       		<td>Film id:</td>
@@ -57,6 +60,9 @@
         	<td>${film.specialFeatures}</td>
         </tr>
       </table>
+        <br>
+        
+        </c:forEach>
     </c:when>
     <c:otherwise>
       <p>No film found</p>
