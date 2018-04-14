@@ -36,4 +36,13 @@ public class FilmController {
 		mv.setViewName("display");
 		return mv;
 	}
+	
+	@RequestMapping(path="GetFilmInfo.do", params="keyword", method = RequestMethod.GET)
+	public ModelAndView getFilmByKeyword(String keyword) {
+		ModelAndView mv = new ModelAndView();
+		List<Film> filmList = accessor.getFilmByKeyword(keyword);
+		mv.addObject(filmList);
+		mv.setViewName("display");
+		return mv;
+	}
 }
