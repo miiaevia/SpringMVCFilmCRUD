@@ -56,18 +56,17 @@ public class FilmController {
 	@RequestMapping(path = "addInfo.do", method = RequestMethod.POST)
 	public ModelAndView addFilm(@Valid Film createdFilm, Errors errors, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
-			List<Film> filmList = new ArrayList<Film>();
-			createdFilm.setLanguage(accessor.getFilmsLanguage(createdFilm.getLanguageId()));
-			Film f = accessor.addFilm(createdFilm);
-			if (f != null) {
-				filmList.add(f);
-				redir.addFlashAttribute("filmList", filmList);
-				mv.setViewName("redirect:filmAdded.do");
-			}
-			else {
-				mv.setViewName("couldNotAddFilm");
-			}
-			return mv;
+		List<Film> filmList = new ArrayList<Film>();
+		createdFilm.setLanguage(accessor.getFilmsLanguage(createdFilm.getLanguageId()));
+		Film f = accessor.addFilm(createdFilm);
+		if (f != null) {
+			filmList.add(f);
+			redir.addFlashAttribute("filmList", filmList);
+			mv.setViewName("redirect:filmAdded.do");
+		} else {
+			mv.setViewName("couldNotAddFilm");
+		}
+		return mv;
 	}
 
 	@RequestMapping(path = "filmAdded.do", method = RequestMethod.GET)

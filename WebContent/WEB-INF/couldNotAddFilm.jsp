@@ -10,8 +10,7 @@
 <title>Unsuccessful Submission</title>
 </head>
 <body>
-	<h3>We were unable to add your film. Please insert valid fields
-		next time!</h3>
+	We were unable to add your film. Please insert valid fields next time!
 	<br>
 	<a href="index.html">Return home</a>
 </body>
