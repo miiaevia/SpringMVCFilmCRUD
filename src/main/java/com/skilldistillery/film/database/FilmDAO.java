@@ -256,14 +256,22 @@ public class FilmDAO implements DatabaseAccessor {
 		// deleteFilm(film);
 		// and addFilmWithId(film);
 		// return boolean for success and fail
-		int newActorId = 0;
+		//int newActorId = 0;
 
 		try {
-			String sql = "update film " + "set title = ?," + " description = ?, " + "release_year = ?, "
+			String sql = "update film "
+					+ "set title = ?," 
+					+ " description = ?, "
+					+ "release_year = ?, "
 					+ "language_id = 1, "// how do u want to handle this??
 					// can we do a dropdown menu in the jsp?? ex: 1 english 2 french etc.
-					+ "rental_duration = ?, " + "rental_rate = ?," + " length = ?, " + "replacement_cost = ?, "
-					+ "rating = ?, " + "special_features = ? " + "where id = ?";
+					+ "rental_duration = ?, "
+					+ "rental_rate = ?,"
+					+ " length = ?, "
+					+ "replacement_cost = ?, "
+					+ "rating = ?, "
+					+ "special_features = ? "
+					+ "where id = ?";
 			Connection conn = DriverManager.getConnection(URL, user, pass);
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, film.getTitle());

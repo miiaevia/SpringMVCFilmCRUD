@@ -1,4 +1,4 @@
-package com.skilldistillery.film.entities;
+package com.skilldistillery.film.tests;
 
 import static org.junit.Assert.*;
 
