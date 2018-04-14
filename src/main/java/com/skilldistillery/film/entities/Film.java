@@ -9,6 +9,7 @@ public class Film {
 	private int id;
 	private String title;
 	private String description;
+	private Language language;
 	private int releaseYear;
 	private int languageId;
 	private int rentalDuration;
@@ -25,9 +26,21 @@ public class Film {
 	
 
 
+	public Language getLanguage() {
+		return language;
+	}
+
+
+
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
+
+
+
 	public Film(int id, String title, String description, int releaseYear, int languageId, int rentalDuration,
 			double rentalRate, int length, double replacementCost, String rating, String specialFeatures,
-			List<Actor> cast) {
+			List<Actor> cast, Language language) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -41,6 +54,7 @@ public class Film {
 		this.rating = rating;
 		this.specialFeatures = specialFeatures;
 		this.cast = cast;
+		this.language = language;
 	}
 
 
@@ -239,13 +253,17 @@ public class Film {
 	}
 
 
+	
+
+
 	@Override
 	public String toString() {
-		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", releaseYear=" + releaseYear
-				+ ", languageId=" + languageId + ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate
-				+ ", length=" + length + ", replacementCost=" + replacementCost + ", rating=" + rating
-				+ ", specialFeatures=" + specialFeatures + ", cast=" + cast ;
+		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", language=" + language
+				+ ", releaseYear=" + releaseYear + ", languageId=" + languageId + ", rentalDuration=" + rentalDuration
+				+ ", rentalRate=" + rentalRate + ", length=" + length + ", replacementCost=" + replacementCost
+				+ ", rating=" + rating + ", specialFeatures=" + specialFeatures + ", cast=" + cast + "]";
 	}
+
 
 
 	public List<Actor> getCast() {

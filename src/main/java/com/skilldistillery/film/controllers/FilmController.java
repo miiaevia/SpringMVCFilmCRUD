@@ -46,10 +46,11 @@ public class FilmController {
 		return mv;
 	}
 	
-	@RequestMapping(path="GetFilmInfo.do", method = RequestMethod.POST)
+	@RequestMapping(path="addInfo.do", method = RequestMethod.POST)
 	public ModelAndView addFilm(Film createdFilm, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
 		List<Film> filmList = new ArrayList<Film>();
+		createdFilm.setLanguage(accessor.getFilmsLanguage(createdFilm.getLanguageId()));
 		filmList.add(accessor.addFilm(createdFilm));
 		redir.addFlashAttribute("filmList", filmList);
 		mv.setViewName("redirect:filmAdded.do");
