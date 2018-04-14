@@ -191,6 +191,8 @@ public class FilmDAO implements DatabaseAccessor {
 	}
 
 	public Film addFilm(Film film) {
+		// todo change return to a boolean to indicate success or failure of insert(same
+		// as delete)
 		int newActorId = 0;
 
 		try {
@@ -214,12 +216,16 @@ public class FilmDAO implements DatabaseAccessor {
 					newActorId = generatedKeys.getInt(1);
 					film.setId(newActorId);
 					return film;
+					// System.out.println("This film was added successfully");
+					// return true;
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
+		// System.out.println("Unable to add film");
+		// return false;
 	}
 
 	public boolean deleteFilm(Film film) {
@@ -241,6 +247,52 @@ public class FilmDAO implements DatabaseAccessor {
 		}
 		System.out.println("Unable to delete film");
 		return false;
+	}
+
+	@Override
+	public Film editFilm(Film film) {// boolean
+		// if all info coming through from jsp in the form of a new film object
+		// then this method can be as easy as
+		// deleteFilm(film);
+		// and addFilmWithId(film);
+		// return boolean for success and fail
+		int newActorId = 0;
+
+		try {
+			String sql = "update film " + "set title = ?," + " description = ?, " + "release_year = ?, "
+					+ "language_id = 1, "// how do u want to handle this??
+					// can we do a dropdown menu in the jsp?? ex: 1 english 2 french etc.
+					+ "rental_duration = ?, " + "rental_rate = ?," + " length = ?, " + "replacement_cost = ?, "
+					+ "rating = ?, " + "special_features = ? " + "where id = ?";
+			Connection conn = DriverManager.getConnection(URL, user, pass);
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, film.getTitle());
+			stmt.setString(2, film.getDescription());
+			stmt.setInt(3, film.getReleaseYear());
+			stmt.setInt(4, film.getRentalDuration());
+			stmt.setDouble(5, film.getRentalRate());
+			stmt.setInt(6, film.getLength());
+			stmt.setDouble(7, film.getReplacementCost());
+			stmt.setString(8, film.getRating());
+			stmt.setString(9, film.getSpecialFeatures());
+			stmt.setInt(10, film.getId());
+			int updateCount = stmt.executeUpdate();
+			if (updateCount == 1) {
+				ResultSet generatedKeys = stmt.getGeneratedKeys();
+				if (generatedKeys.next()) {
+					// newActorId = generatedKeys.getInt(1);
+					// film.setId(newActorId);
+					return film;
+					// System.out.println("This film was edited successfully");
+					// return true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+		// System.out.println("Unable to edit this film");
+		// return false;
 	}
 
 }
