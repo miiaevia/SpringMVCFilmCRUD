@@ -337,7 +337,6 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			int updateCount = stmt.executeUpdate();
 			if (updateCount == 1) {
 				
-				
 				conn.commit();
 			}
 		} catch (SQLException e) {
