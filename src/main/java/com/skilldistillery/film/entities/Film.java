@@ -18,6 +18,7 @@ public class Film {
 	private double replacementCost;
 	private String rating;
 	private String specialFeatures;
+	private Category category;
 	private List <Actor> cast;
 	
 	public Film() {
@@ -25,6 +26,14 @@ public class Film {
 	}
 	
 
+	
+	public Category getCategory() {
+		return category;
+	}
+	
+	public void setCategory(Category category) {
+		this.category = category;
+	}
 
 	public Language getLanguage() {
 		return language;
@@ -40,7 +49,7 @@ public class Film {
 
 	public Film(int id, String title, String description, int releaseYear, int languageId, int rentalDuration,
 			double rentalRate, int length, double replacementCost, String rating, String specialFeatures,
-			List<Actor> cast, Language language) {
+			List<Actor> cast, Language language, Category category) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -55,7 +64,26 @@ public class Film {
 		this.specialFeatures = specialFeatures;
 		this.cast = cast;
 		this.language = language;
+		this.category = category;
 	}
+
+
+//	public Film(int id, String title, String description, int releaseYear, int languageId, int rentalDuration,
+//			double rentalRate, int length, double replacementCost, String rating, String specialFeatures) {
+//		super();
+//		this.id = id;
+//		this.title = title;
+//		this.description = description;
+//		this.releaseYear = releaseYear;
+//		this.languageId = languageId;
+//		this.rentalDuration = rentalDuration;
+//		this.rentalRate = rentalRate;
+//		this.length = length;
+//		this.replacementCost = replacementCost;
+//		this.rating = rating;
+//		this.specialFeatures = specialFeatures;
+//	}
+
 
 
 	@Override
@@ -175,25 +203,6 @@ public class Film {
 
 	public int getLanguageId() {
 		return languageId;
-	}
-
-
-	public Film(int id, String title, String description, int releaseYear, int languageId, int rentalDuration,
-			double rentalRate, int length, double replacementCost, String rating, String specialFeatures
-			)
-			 {
-		super();
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.releaseYear = releaseYear;
-		this.languageId = languageId;
-		this.rentalDuration = rentalDuration;
-		this.rentalRate = rentalRate;
-		this.length = length;
-		this.replacementCost = replacementCost;
-		this.rating = rating;
-		this.specialFeatures = specialFeatures;
 	}
 
 

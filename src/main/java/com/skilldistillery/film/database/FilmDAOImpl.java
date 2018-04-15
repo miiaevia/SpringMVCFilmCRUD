@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.skilldistillery.film.entities.Actor;
+import com.skilldistillery.film.entities.Category;
 import com.skilldistillery.film.entities.Film;
 import com.skilldistillery.film.entities.Language;
 
@@ -71,7 +72,8 @@ public class FilmDAOImpl implements DatabaseAccessor {
 				String specialFeatures = rs.getString(11);
 				List<Actor> cast = getActorsByFilmId(id);
 				Language language = getFilmsLanguage(languageId);
-				film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, cast, language);
+				Category category = getFilmsCategory(id);
+				film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, cast, language, category);
 			}
 			rs.close();
 			stmt.close();
@@ -135,9 +137,11 @@ public class FilmDAOImpl implements DatabaseAccessor {
 				String specialFeatures = rs.getString(11);
 				List<Actor> cast = getActorsByFilmId(id);
 				Language language = getFilmsLanguage(languageId);
+				Category category = getFilmsCategory(id);
 
-				Film film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate,
-						length, replacementCost, rating, specialFeatures, cast, language);
+//				Film film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate,
+//						length, replacementCost, rating, specialFeatures, cast, language);
+				Film film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, cast, language, category);
 				films.add(film);
 			}
 			rs.close();
@@ -174,6 +178,33 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		}
 		return language;
 
+	}
+	
+	public Category getFilmsCategory(int filmId) {
+		Category category = null;
+		String sql = "SELECT c.id, c.name FROM category c JOIN film_category fc ON c.id = fc.category_id JOIN film f ON f.id = fc.film_id WHERE f.id = ?";
+		try {
+			Connection conn = DriverManager.getConnection(URL, user, pass);
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, filmId);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				
+				int id = rs.getInt(1);
+				String name = rs.getString(2);
+				category = new Category(id, name);
+				
+			}
+			
+			rs.close();
+			stmt.close();
+			conn.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return category;
+		
 	}
 
 	static {

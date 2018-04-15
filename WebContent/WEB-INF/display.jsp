@@ -62,6 +62,10 @@
 						<td>Special Features:</td>
 						<td>${film.specialFeatures}</td>
 					</tr>
+					<tr>
+						<td>Category:</td>
+						<td>${film.category.categoryName}</td>
+					</tr>
 				</table>
 				<br>
 
