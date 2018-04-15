@@ -66,19 +66,19 @@
 	<br>
 	<form name="edit" method="POST" action="edit.do">
 		<label for="title">Title</label>
- 		<input type=“text” name=“title” placeholder=${film.title }><br>
+ 		<input type="text" name="title" value=${film.title }><br>
  		<label for="description">Description</label>
-		<input type=“text” name=“description” placeholder=${film.description }><br>
+		<input type="text" name="description" value=${film.description }><br>
  		<label for="releaseYear">Release Year</label>
-		<input type=“number” name=“releaseYear” min="1901" max="2099" placeholder=${film.releaseYear }><br>
+		<input type="number" name="releaseYear" min="1901" max="2099" value=${film.releaseYear }><br>
  		<label for="rentalDuration">Rental Duration</label>
-		<input type=“number” name=“rentalDuration” min="1" max="21" placeholder=${film.rentalDuration }><br>
+		<input type="number" name="rentalDuration" min="1" max="21" value=${film.rentalDuration }><br>
  		<label for="rentalRate">Rental Rate</label>
-		<input type=“number” name=“rentalRate” step="0.05" min="0" max="10" placeholder=${film.rentalRate }><br>
+		<input type="number" name="rentalRate" step="0.05" min="0" max="10" value=${film.rentalRate }><br>
  		<label for="length">Length of Film</label>
-		<input type=“number” name=“length” min="5" max="240" placeholder=${film.length }><br>
+		<input type="number" name="length" min="5" max="240" value=${film.length }><br>
  		<label for="replacementCost">Replacement Cost</label>
-		<input type=“number” name=“replacementCost” step="1" min="0" max="100" placeholder=${film.replacementCost }><br>
+		<input type="number" name="replacementCost" step="1" min="0" max="100" value=${film.replacementCost }><br>
  		<label for="rating">Rating</label>
 	 	<select name="rating">
  			<option value="G">G</option>
@@ -105,33 +105,7 @@
 			<option value="5">French</option>
 			<option value="6">German</option>
 		</select> <br>
- 		<button type=“submit” class="btn btn-primary" value ="send">Submit</button>
+ 		<button type="submit" class="btn btn-primary" value ="send">Submit</button>
 	</form>
 </body>
 </html>
-	<!--
-@RequestMapping(path = "editController.do", method = RequestMethod.POST)
- public ModelAndView filmToEdit(Film filmToBeEdited, RedirectAttributes redir) {
-		ModelAndView mv = new ModelAndView();
-		mv.addObject(filmToBeEdited);
-		mv.setViewName("editFilm");
-		
-		return mv;
-	}
-	
-	@RequestMapping(path="edit.do", method = RequestMethod.POST)
-	public ModelAndView editingFilm(Film editedFilm) {
-		ModelAndView mv = new ModelAndView(); 
-		System.out.println(editedFilm);
-		Film newFilm = accessor.editFilm(editedFilm);
-		if(newFilm != null) {
-			mv.addObject(newFilm);
-			mv.setViewName("editSuccess");
-		}
-		else {
-			mv.setViewName("editFail");
-		}
-		
-		return mv;
-	} -->
-	
