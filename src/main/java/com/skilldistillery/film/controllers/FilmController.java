@@ -101,7 +101,7 @@ public class FilmController {
 		System.out.println(editedFilm);
 		Film newFilm = accessor.editFilm(editedFilm);
 		if(newFilm != null) {
-			mv.addObject(newFilm);
+			mv.addObject(accessor.getFilmById(newFilm.getId()));
 			mv.setViewName("editSuccess");
 		}
 		else {
