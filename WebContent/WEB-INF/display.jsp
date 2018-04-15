@@ -70,7 +70,6 @@
 				<br>
 
 				<form name="delete" method="post" action="delete.do">
-				${film.id}
 					<input type="hidden" name="id" value="${film.id}">
 					<input type="submit" name="delete" value="Delete Film">
 				</form>

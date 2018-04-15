@@ -27,6 +27,18 @@ public class Film {
 	
 
 	
+	public int getCategoryId() {
+		return categoryId;
+	}
+
+
+
+	public void setCategoryId(int categoryId) {
+		this.categoryId = categoryId;
+	}
+
+
+
 	public Category getCategory() {
 		return category;
 	}
@@ -47,7 +59,7 @@ public class Film {
 
 
 
-	public Film(int id, String title, String description, int releaseYear, int languageId, int rentalDuration,
+	public Film(int id, String title, String description, int releaseYear, int languageId, int categoryId, int rentalDuration,
 			double rentalRate, int length, double replacementCost, String rating, String specialFeatures,
 			List<Actor> cast, Language language, Category category) {
 		super();
@@ -65,6 +77,7 @@ public class Film {
 		this.cast = cast;
 		this.language = language;
 		this.category = category;
+		this.categoryId = categoryId;
 	}
 
 

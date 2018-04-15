@@ -246,7 +246,6 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			} else {
 				film = null;
 			}
-			System.out.println(film);
 			conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
