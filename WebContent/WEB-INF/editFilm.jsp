@@ -65,6 +65,7 @@
 	</table>
 	<br>
 	<form name="edit" method="POST" action="edit.do">
+	 <input type="hidden" value="${film.id }" name="id">
 		<label for="title">Title</label>
  		<input type="text" name="title" value=${film.title }><br>
  		<label for="description">Description</label>
@@ -109,3 +110,5 @@
 	</form>
 </body>
 </html>
+
+
