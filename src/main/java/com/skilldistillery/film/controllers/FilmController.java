@@ -3,7 +3,7 @@ package com.skilldistillery.film.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.Valid;
+//import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -68,7 +68,8 @@ public class FilmController {
 	}
 
 	@RequestMapping(path = "addInfo.do", method = RequestMethod.POST)
-	public ModelAndView addFilm(@Valid Film createdFilm, Errors errors, RedirectAttributes redir) {
+	public ModelAndView addFilm(Film createdFilm, Errors errors, RedirectAttributes redir) {
+	//public ModelAndView addFilm(@Valid Film createdFilm, Errors errors, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
 		List<Film> filmList = new ArrayList<Film>();
 		System.out.println(createdFilm);

@@ -64,7 +64,7 @@
 		</tr>
 	</table>
 	<br>
-	<form name="edit" method="POST" action=“edit.do”>
+	<form name="edit" method="POST" action="edit.do">
 		<label for="title">Title</label>
  		<input type=“text” name=“title” placeholder=${film.title }><br>
  		<label for="description">Description</label>
@@ -105,7 +105,33 @@
 			<option value="5">French</option>
 			<option value="6">German</option>
 		</select> <br>
- 		<button type=“submit” class="btn btn-primary">Submit</button>
+ 		<button type=“submit” class="btn btn-primary" value ="send">Submit</button>
 	</form>
 </body>
 </html>
+	<!--
+@RequestMapping(path = "editController.do", method = RequestMethod.POST)
+ public ModelAndView filmToEdit(Film filmToBeEdited, RedirectAttributes redir) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject(filmToBeEdited);
+		mv.setViewName("editFilm");
+		
+		return mv;
+	}
+	
+	@RequestMapping(path="edit.do", method = RequestMethod.POST)
+	public ModelAndView editingFilm(Film editedFilm) {
+		ModelAndView mv = new ModelAndView(); 
+		System.out.println(editedFilm);
+		Film newFilm = accessor.editFilm(editedFilm);
+		if(newFilm != null) {
+			mv.addObject(newFilm);
+			mv.setViewName("editSuccess");
+		}
+		else {
+			mv.setViewName("editFail");
+		}
+		
+		return mv;
+	} -->
+	
