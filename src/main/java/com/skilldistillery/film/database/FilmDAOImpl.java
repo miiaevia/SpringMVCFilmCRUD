@@ -70,7 +70,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 				String rating = rs.getString(10);
 				String specialFeatures = rs.getString(11);
 				List<Actor> cast = getActorsByFilmId(id);
-				Language language = getFilmsLanguage(filmId);
+				Language language = getFilmsLanguage(languageId);
 				film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, cast, language);
 			}
 			rs.close();
@@ -262,7 +262,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 	@Override
 	public Film editFilm(Film film) {
 		Connection conn = null;
-
+		System.out.println(film);
 		try {
 			conn = DriverManager.getConnection(URL, user, pass);
 			conn.setAutoCommit(false);
@@ -295,6 +295,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 
 			throw new RuntimeException("Unable to edit film");
 		}
+		System.out.println(film);
 		return film;
 	}
 	

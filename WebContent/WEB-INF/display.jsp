@@ -71,8 +71,20 @@
 					<input type="submit" name="delete" value="Delete Film">
 				</form>
 
-				<form action="">
-					<input type="submit" name="" value="Edit Film">
+				<form name="editController" method="post" action="editController.do">
+					<input type="hidden" name="id" value="${film.id}">
+					<input type="hidden" name="title" value="${film.title}">
+					<input type="hidden" name="description" value="${film.description}">
+					<input type="hidden" name="releaseYear" value="${film.releaseYear}">
+					<input type="hidden" name="languageId" value="${film.languageId}">
+					<input type="hidden" name="language" value="${film.language}">
+					<input type="hidden" name="rentalDuration" value="${film.rentalDuration}">
+					<input type="hidden" name="rentalRate" value="${film.rentalRate}">
+					<input type="hidden" name="length" value="${film.length}">
+					<input type="hidden" name="replacementCost" value="${film.replacementCost}">
+					<input type="hidden" name="rating" value="${film.rating}">
+					<input type="hidden" name="specialFeatures" value="${film.specialFeatures}">
+ 					<input type="submit" name="edit" value="Edit Film">
 				</form>
 
 			</c:forEach>

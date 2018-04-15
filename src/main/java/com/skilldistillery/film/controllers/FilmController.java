@@ -71,6 +71,7 @@ public class FilmController {
 	public ModelAndView addFilm(@Valid Film createdFilm, Errors errors, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
 		List<Film> filmList = new ArrayList<Film>();
+		System.out.println(createdFilm);
 		createdFilm.setLanguage(accessor.getFilmsLanguage(createdFilm.getLanguageId()));
 		Film f = accessor.addFilm(createdFilm);
 		if (f != null) {
@@ -82,6 +83,32 @@ public class FilmController {
 		}
 		return mv;
 	}
+	
+	@RequestMapping(path = "editController.do", method = RequestMethod.POST)
+	public ModelAndView filmToEdit(Film filmToBeEdited, RedirectAttributes redir) {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject(filmToBeEdited);
+		mv.setViewName("editFilm");
+		
+		return mv;
+	}
+	
+	@RequestMapping(path="edit.do", method = RequestMethod.POST)
+	public ModelAndView editingFilm(Film editedFilm) {
+		ModelAndView mv = new ModelAndView(); 
+		System.out.println(editedFilm);
+		Film newFilm = accessor.editFilm(editedFilm);
+		if(newFilm != null) {
+			mv.addObject(newFilm);
+			mv.setViewName("editSuccess");
+		}
+		else {
+			mv.setViewName("editFail");
+		}
+		
+		return mv;
+	}
+	
 
 	@RequestMapping(path = "filmAdded.do", method = RequestMethod.GET)
 	public ModelAndView added() {
