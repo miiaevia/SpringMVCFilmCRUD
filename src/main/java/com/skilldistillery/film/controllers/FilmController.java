@@ -85,6 +85,13 @@ public class FilmController {
 		return mv;
 	}
 	
+	@RequestMapping(path = "filmAdded.do", method = RequestMethod.GET)
+	public ModelAndView added() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("display");
+		return mv;
+	}
+
 	@RequestMapping(path = "editController.do", method = RequestMethod.POST)
 	public ModelAndView filmToEdit(Film filmToBeEdited, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
@@ -108,14 +115,6 @@ public class FilmController {
 			mv.setViewName("editFail");
 		}
 		
-		return mv;
-	}
-	
-
-	@RequestMapping(path = "filmAdded.do", method = RequestMethod.GET)
-	public ModelAndView added() {
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("display");
 		return mv;
 	}
 }

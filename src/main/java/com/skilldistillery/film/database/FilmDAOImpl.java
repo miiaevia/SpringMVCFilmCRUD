@@ -229,8 +229,8 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			stmt.setString(1, film.getTitle());
 			stmt.setString(2, film.getDescription());
 			stmt.setInt(3, film.getReleaseYear());
-			stmt.setInt(4, film.getRentalDuration());
-			stmt.setInt(5, film.getLanguageId());
+			stmt.setInt(4, film.getLanguageId());
+			stmt.setInt(5, film.getRentalDuration());
 			stmt.setDouble(6, film.getRentalRate());
 			stmt.setInt(7, film.getLength());
 			stmt.setDouble(8, film.getReplacementCost());
@@ -264,6 +264,27 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			throw new RuntimeException("Unable to add film");
 		}
 		return film;
+	}
+
+	@Override
+	public void addCategoryToDatabase(int filmId, int categoryId) {
+		try {
+			String sql = "INSERT INTO film_category(film_id, category_id) VALUES(?, ?)";
+			Connection conn = DriverManager.getConnection(URL, user, pass);
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setInt(1, filmId);
+			stmt.setInt(2, categoryId);
+			int updateCount = stmt.executeUpdate();
+			if (updateCount != 0) {
+				System.out.println("Input category success");
+			} else {
+				System.out.println("Input category fail");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public boolean deleteFilm(Film film) {
@@ -333,27 +354,6 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		}
 		System.out.println(film);
 		return film;
-	}
-
-	@Override
-	public void addCategoryToDatabase(int filmId, int categoryId) {
-		try {
-			String sql = "INSERT INTO film_category(film_id, category_id) VALUES(?, ?)";
-			Connection conn = DriverManager.getConnection(URL, user, pass);
-			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			stmt.setInt(1, filmId);
-			stmt.setInt(2, categoryId);
-			int updateCount = stmt.executeUpdate();
-			if (updateCount != 0) {
-				System.out.println("Input category success");
-			} else {
-				System.out.println("Input category fail");
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
 	}
 
 }
