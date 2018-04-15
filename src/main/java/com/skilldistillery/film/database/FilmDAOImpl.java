@@ -73,7 +73,8 @@ public class FilmDAOImpl implements DatabaseAccessor {
 				List<Actor> cast = getActorsByFilmId(id);
 				Language language = getFilmsLanguage(languageId);
 				Category category = getFilmsCategory(id);
-				film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, cast, language, category);
+				film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate, length,
+						replacementCost, rating, specialFeatures, cast, language, category);
 			}
 			rs.close();
 			stmt.close();
@@ -139,9 +140,11 @@ public class FilmDAOImpl implements DatabaseAccessor {
 				Language language = getFilmsLanguage(languageId);
 				Category category = getFilmsCategory(id);
 
-//				Film film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate,
-//						length, replacementCost, rating, specialFeatures, cast, language);
-				Film film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, cast, language, category);
+				// Film film = new Film(id, title, description, releaseYear, languageId,
+				// rentalDuration, rentalRate,
+				// length, replacementCost, rating, specialFeatures, cast, language);
+				Film film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate,
+						length, replacementCost, rating, specialFeatures, cast, language, category);
 				films.add(film);
 			}
 			rs.close();
@@ -179,7 +182,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		return language;
 
 	}
-	
+
 	public Category getFilmsCategory(int filmId) {
 		Category category = null;
 		String sql = "SELECT c.id, c.name FROM category c JOIN film_category fc ON c.id = fc.category_id JOIN film f ON f.id = fc.film_id WHERE f.id = ?";
@@ -189,22 +192,22 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			stmt.setInt(1, filmId);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
-				
+
 				int id = rs.getInt(1);
 				String name = rs.getString(2);
 				category = new Category(id, name);
-				
+
 			}
-			
+
 			rs.close();
 			stmt.close();
 			conn.close();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return category;
-		
+
 	}
 
 	static {
@@ -218,7 +221,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 
 	public Film addFilm(Film film) {
 		Connection conn = null;
-		
+
 		try {
 			conn = DriverManager.getConnection(URL, user, pass);
 			conn.setAutoCommit(false);
@@ -235,7 +238,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			stmt.setDouble(8, film.getReplacementCost());
 			stmt.setString(9, film.getRating());
 			stmt.setString(10, film.getSpecialFeatures());
-			
+
 			int updateCount = stmt.executeUpdate();
 			if (updateCount == 1) {
 				ResultSet generatedKeys = stmt.getGeneratedKeys();
@@ -266,7 +269,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 
 	public boolean deleteFilm(Film film) {
 		boolean deletion = false;
-		
+
 		try {
 			String sql = "delete from film where id = ?";
 			Connection conn = DriverManager.getConnection(URL, user, pass);
@@ -276,8 +279,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			if (updateCount != 0) {
 				System.out.println("Film deleted successfully");
 				deletion = true;
-			}
-			else {
+			} else {
 				System.out.println("Unable to delete film");
 				deletion = false;
 			}
@@ -313,7 +315,9 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			stmt.setString(10, film.getSpecialFeatures());
 			stmt.setInt(11, film.getId());
 			int updateCount = stmt.executeUpdate();
-			conn.commit();
+			if (updateCount == 1) {
+				conn.commit();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			if (conn != null) {
@@ -329,5 +333,5 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		System.out.println(film);
 		return film;
 	}
-	
+
 }

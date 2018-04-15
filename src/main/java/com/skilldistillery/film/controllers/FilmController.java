@@ -94,8 +94,9 @@ public class FilmController {
 		return mv;
 	}
 	
-	@RequestMapping(path="edit.do", method = RequestMethod.POST)
+	@RequestMapping(path = "edit.do", method = RequestMethod.POST)
 	public ModelAndView editingFilm(Film editedFilm) {
+		System.out.println("edit.do film = "+ editedFilm);
 		ModelAndView mv = new ModelAndView(); 
 		System.out.println(editedFilm);
 		Film newFilm = accessor.editFilm(editedFilm);
