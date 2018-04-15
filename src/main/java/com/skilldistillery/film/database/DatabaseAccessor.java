@@ -23,4 +23,5 @@ public interface DatabaseAccessor {
 	
 	public Film editFilm (Film film);
 	
+	public void addCategoryToDatabase (int filmId, int categoryId);
 }

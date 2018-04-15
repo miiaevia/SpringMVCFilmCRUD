@@ -73,8 +73,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 				List<Actor> cast = getActorsByFilmId(id);
 				Language language = getFilmsLanguage(languageId);
 				Category category = getFilmsCategory(id);
-				film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate, length,
-						replacementCost, rating, specialFeatures, cast, language, category);
+				film = new Film(filmId, title, description, language, releaseYear, languageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, category, cast, 0);
 			}
 			rs.close();
 			stmt.close();
@@ -143,8 +142,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 				// Film film = new Film(id, title, description, releaseYear, languageId,
 				// rentalDuration, rentalRate,
 				// length, replacementCost, rating, specialFeatures, cast, language);
-				Film film = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate,
-						length, replacementCost, rating, specialFeatures, cast, language, category);
+				Film film = new Film(languageId, title, description, language, releaseYear, languageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, category, cast, 0);
 				films.add(film);
 			}
 			rs.close();
@@ -245,10 +243,12 @@ public class FilmDAOImpl implements DatabaseAccessor {
 				if (generatedKeys.next()) {
 					int newFilmId = generatedKeys.getInt(1);
 					film.setId(newFilmId);
+					addCategoryToDatabase(newFilmId, film.getCategoryId());
 				}
 			} else {
 				film = null;
 			}
+			System.out.println(film);
 			conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -331,6 +331,27 @@ public class FilmDAOImpl implements DatabaseAccessor {
 		}
 		System.out.println(film);
 		return film;
+	}
+
+	@Override
+	public void addCategoryToDatabase(int filmId, int categoryId) {
+		try {
+			String sql = "INSERT INTO film_category(film_id, category_id) VALUES(?, ?)";
+			Connection conn = DriverManager.getConnection(URL, user, pass);
+			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setInt(1, filmId);
+			stmt.setInt(2, categoryId);
+			int updateCount = stmt.executeUpdate();
+			if (updateCount != 0) {
+				System.out.println("Input category success");
+			} else {
+				System.out.println("Input category fail");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

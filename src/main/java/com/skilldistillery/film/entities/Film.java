@@ -12,6 +12,7 @@ public class Film {
 	private Language language;
 	private int releaseYear;
 	private int languageId;
+	private int categoryId;
 	private int rentalDuration;
 	private double rentalRate;
 	private int length;
@@ -59,28 +60,6 @@ public class Film {
 
 
 
-	public Film(int id, String title, String description, int releaseYear, int languageId, int categoryId, int rentalDuration,
-			double rentalRate, int length, double replacementCost, String rating, String specialFeatures,
-			List<Actor> cast, Language language, Category category) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.description = description;
-		this.releaseYear = releaseYear;
-		this.languageId = languageId;
-		this.rentalDuration = rentalDuration;
-		this.rentalRate = rentalRate;
-		this.length = length;
-		this.replacementCost = replacementCost;
-		this.rating = rating;
-		this.specialFeatures = specialFeatures;
-		this.cast = cast;
-		this.language = language;
-		this.category = category;
-		this.categoryId = categoryId;
-	}
-
-
 //	public Film(int id, String title, String description, int releaseYear, int languageId, int rentalDuration,
 //			double rentalRate, int length, double replacementCost, String rating, String specialFeatures) {
 //		super();
@@ -97,6 +76,7 @@ public class Film {
 //		this.specialFeatures = specialFeatures;
 //	}
 
+	
 
 
 	@Override
@@ -120,6 +100,29 @@ public class Film {
 		result = prime * result + ((title == null) ? 0 : title.hashCode());
 		return result;
 	}
+
+
+	public Film(int id, String title, String description, Language language, int releaseYear, int languageId,
+		int rentalDuration, double rentalRate, int length, double replacementCost, String rating,
+		String specialFeatures, Category category, List<Actor> cast, int categoryId) {
+	super();
+	this.id = id;
+	this.title = title;
+	this.description = description;
+	this.language = language;
+	this.releaseYear = releaseYear;
+	this.languageId = languageId;
+	this.rentalDuration = rentalDuration;
+	this.rentalRate = rentalRate;
+	this.length = length;
+	this.replacementCost = replacementCost;
+	this.rating = rating;
+	this.specialFeatures = specialFeatures;
+	this.category = category;
+	this.cast = cast;
+	this.categoryId = categoryId;
+}
+
 
 
 	@Override
@@ -275,15 +278,15 @@ public class Film {
 	}
 
 
-	
 
 
 	@Override
 	public String toString() {
 		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", language=" + language
-				+ ", releaseYear=" + releaseYear + ", languageId=" + languageId + ", rentalDuration=" + rentalDuration
-				+ ", rentalRate=" + rentalRate + ", length=" + length + ", replacementCost=" + replacementCost
-				+ ", rating=" + rating + ", specialFeatures=" + specialFeatures + ", cast=" + cast + "]";
+				+ ", releaseYear=" + releaseYear + ", languageId=" + languageId + ", categoryId=" + categoryId
+				+ ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate + ", length=" + length
+				+ ", replacementCost=" + replacementCost + ", rating=" + rating + ", specialFeatures=" + specialFeatures
+				+ ", category=" + category + ", cast=" + cast + "]";
 	}
 
 
@@ -311,6 +314,5 @@ public class Film {
 	
 	
 }
-
 
 
