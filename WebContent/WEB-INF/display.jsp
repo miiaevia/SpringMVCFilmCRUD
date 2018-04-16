@@ -71,7 +71,6 @@
 						<c:forEach var="actor" items="${film.cast}">
 						<td>${actor.firstName} ${actor.lastName}</td>
 						</c:forEach>
-						</tr>
 				</table>
 				<br>
 
