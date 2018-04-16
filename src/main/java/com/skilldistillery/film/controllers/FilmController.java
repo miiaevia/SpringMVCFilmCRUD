@@ -56,7 +56,6 @@ public class FilmController {
 	@RequestMapping(path = "delete.do", method = RequestMethod.POST)
 	public ModelAndView deleteFilm(Film filmToDelete) {
 		ModelAndView mv = new ModelAndView();
-		System.out.println(filmToDelete.getId());
 		if(accessor.deleteFilm(filmToDelete)) {
 			mv.setViewName("deleteSuccess");
 		}
@@ -72,7 +71,6 @@ public class FilmController {
 	//public ModelAndView addFilm(@Valid Film createdFilm, Errors errors, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
 		List<Film> filmList = new ArrayList<Film>();
-		System.out.println(createdFilm);
 		createdFilm.setLanguage(accessor.getFilmsLanguage(createdFilm.getLanguageId()));
 		createdFilm.setCategory(accessor.getFilmsCategory(createdFilm.getCategoryId()));
 		Film f = accessor.addFilm(createdFilm);
@@ -104,9 +102,7 @@ public class FilmController {
 	
 	@RequestMapping(path = "edit.do", method = RequestMethod.POST)
 	public ModelAndView editingFilm(Film editedFilm) {
-		System.out.println("edit.do film = "+ editedFilm);
 		ModelAndView mv = new ModelAndView(); 
-		System.out.println(editedFilm);
 		Film newFilm = accessor.editFilm(editedFilm);
 		if(newFilm != null) {
 			mv.addObject(accessor.getFilmById(newFilm.getId()));

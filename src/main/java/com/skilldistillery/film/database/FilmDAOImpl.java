@@ -249,7 +249,6 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			} else {
 				film = null;
 			}
-			System.out.println(film);
 			conn.commit();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -276,11 +275,6 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			stmt.setInt(1, filmId);
 			stmt.setInt(2, categoryId);
 			int updateCount = stmt.executeUpdate();
-			if (updateCount != 0) {
-				System.out.println("Input category success");
-			} else {
-				System.out.println("Input category fail");
-			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -298,10 +292,8 @@ public class FilmDAOImpl implements DatabaseAccessor {
 			stmt.setInt(1, film.getId());
 			int updateCount = stmt.executeUpdate();
 			if (updateCount != 0) {
-				System.out.println("Film deleted successfully");
 				deletion = true;
 			} else {
-				System.out.println("Unable to delete film");
 				deletion = false;
 			}
 
@@ -316,7 +308,6 @@ public class FilmDAOImpl implements DatabaseAccessor {
 	@Override
 	public Film editFilm(Film film) {
 		Connection conn = null;
-		System.out.println(film);
 		try {
 			conn = DriverManager.getConnection(URL, user, pass);
 			conn.setAutoCommit(false);
@@ -352,7 +343,6 @@ public class FilmDAOImpl implements DatabaseAccessor {
 
 			throw new RuntimeException("Unable to edit film");
 		}
-		System.out.println(film);
 		return film;
 	}
 
