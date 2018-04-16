@@ -181,6 +181,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 
 	}
 
+	@Override
 	public Category getFilmsCategory(int filmId) {
 		Category category = null;
 		String sql = "SELECT c.id, c.name FROM category c JOIN film_category fc ON c.id = fc.category_id JOIN film f ON f.id = fc.film_id WHERE f.id = ?";
