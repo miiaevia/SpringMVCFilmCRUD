@@ -67,11 +67,18 @@
 						<td>${film.category.categoryName}</td>
 					</tr>
 					<tr>
-					<td>Cast:</td>
-						<c:forEach var="actor" items="${film.cast}">
-						<td>${actor.firstName} ${actor.lastName}</td>
-						</c:forEach>
-				</table>
+					<td>Cast:
+				
+						<table>
+                        <c:forEach var="actor" items="${film.cast}">
+                        <tr>
+                        <td> Actor:</td>
+                        <td>${actor.firstName} ${actor.lastName}</td>
+                        </tr>
+                        </c:forEach>
+                        </table>
+                        </tr>
+                    </td> 
 				<br>
 
 				<form name="delete" method="post" action="delete.do">
