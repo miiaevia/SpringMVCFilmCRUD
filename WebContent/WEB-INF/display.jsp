@@ -68,17 +68,17 @@
 					</tr>
 					<tr>
 					<td>Cast:
+				
 						<table>
-						<c:forEach var="actor" items="${film.cast}">
-						<tr>
-						<td> Actor:</td>
-						<td>${actor.firstName} ${actor.lastName}</td>
-						</tr>
-						</c:forEach>
-						</table>
-						</tr>
-					</td>
-				</table>
+                        <c:forEach var="actor" items="${film.cast}">
+                        <tr>
+                        <td> Actor:</td>
+                        <td>${actor.firstName} ${actor.lastName}</td>
+                        </tr>
+                        </c:forEach>
+                        </table>
+                        </tr>
+                    </td> 
 				<br>
 
 				<form name="delete" method="post" action="delete.do">
