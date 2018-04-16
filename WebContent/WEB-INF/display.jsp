@@ -77,8 +77,9 @@
                         </tr>
                         </c:forEach>
                         </table>
-                        </tr>
-                    </td> 
+                    </td>
+                    </tr>
+                </table>
 				<br>
 
 				<form name="delete" method="post" action="delete.do">
