@@ -74,6 +74,7 @@ public class FilmController {
 		List<Film> filmList = new ArrayList<Film>();
 		System.out.println(createdFilm);
 		createdFilm.setLanguage(accessor.getFilmsLanguage(createdFilm.getLanguageId()));
+		createdFilm.setCategory((accessor.getFilmsCategory(createdFilm.getCategoryId()));
 		Film f = accessor.addFilm(createdFilm);
 		if (f != null) {
 			filmList.add(f);
