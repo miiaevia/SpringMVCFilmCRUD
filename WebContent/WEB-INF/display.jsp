@@ -69,7 +69,6 @@
 					</tr>
 					<tr>
 					<td>Cast:
-				
 						<table>
                         <c:forEach var="actor" items="${film.cast}">
                         <tr>
