@@ -142,7 +142,7 @@ public class FilmDAOImpl implements DatabaseAccessor {
 				// Film film = new Film(id, title, description, releaseYear, languageId,
 				// rentalDuration, rentalRate,
 				// length, replacementCost, rating, specialFeatures, cast, language);
-				Film film = new Film(languageId, title, description, language, releaseYear, languageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, category, cast, 0);
+				Film film = new Film(id, title, description, language, releaseYear, languageId, rentalDuration, rentalRate, length, replacementCost, rating, specialFeatures, category, cast, 0);
 				films.add(film);
 			}
 			rs.close();
