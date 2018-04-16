@@ -66,6 +66,12 @@
 						<td>Category:</td>
 						<td>${film.category.categoryName}</td>
 					</tr>
+					<tr>
+					<td>Cast:</td>
+						<c:forEach var="actor" items="${film.cast}">
+						<td>${actor.firstName} ${actor.lastName}</td>
+						</c:forEach>
+						</tr>
 				</table>
 				<br>
 
