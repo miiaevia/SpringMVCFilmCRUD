@@ -10,11 +10,12 @@
 <title>Results</title>
 </head>
 <body>
+	<a href="index.html">Return home</a>
+	<br>
 	<c:choose>
 		<c:when test="${! empty filmList}">
 			<c:forEach var="film" items="${filmList}">
 				<h3>Film:</h3>
-				<br>
 				<table>
 					<tr>
 						<td>Film id:</td>
@@ -109,6 +110,5 @@
 		</c:otherwise>
 	</c:choose>
 	<br>
-	<a href="index.html">Return home</a>
 </body>
 </html>
